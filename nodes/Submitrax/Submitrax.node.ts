@@ -4,6 +4,7 @@ import {
 	INodeType,
 	INodeTypeDescription,
 	IHttpRequestOptions,
+	NodeOperationError,
 } from 'n8n-workflow';
 
 export class Submitrax implements INodeType {
@@ -27,7 +28,7 @@ export class Submitrax implements INodeType {
 			},
 		],
 		requestDefaults: {
-			baseURL: 'https://s.submitrax.com/api',
+			baseURL: 'https://s.submitrax.com',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
@@ -162,6 +163,12 @@ export class Submitrax implements INodeType {
 					},
 				},
 				options: [
+					{
+						name: 'Create',
+						value: 'create',
+						description: 'Create a new submission for a specific form',
+						action: 'Create a submission',
+					},
 					{
 						name: 'Get Many',
 						value: 'getAll',
@@ -348,10 +355,24 @@ export class Submitrax implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['submission'],
-						operation: ['getAll'],
+						operation: ['getAll', 'create'],
 					},
 				},
 				default: '',
+			},
+			{
+				displayName: 'Data (JSON)',
+				name: 'dataJson',
+				type: 'json',
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['submission'],
+						operation: ['create'],
+					},
+				},
+				default: '{}',
+				description: 'The JSON payload for the submission',
 			},
 
 			// ----------------------------------
@@ -511,6 +532,24 @@ export class Submitrax implements INodeType {
 						const options: IHttpRequestOptions = {
 							method: 'GET',
 							url: `/submissions/form/${formId}`,
+							json: true,
+						};
+						responseData = await this.helpers.httpRequestWithAuthentication.call(this, 'submitraxApi', options);
+					}
+					if (operation === 'create') {
+						const formId = this.getNodeParameter('formId', i) as string;
+						const dataJson = this.getNodeParameter('dataJson', i) as string;
+						let body = {};
+						try {
+							body = JSON.parse(dataJson);
+						} catch (error) {
+							throw new NodeOperationError(this.getNode(), 'Invalid JSON provided for submission data');
+						}
+
+						const options: IHttpRequestOptions = {
+							method: 'POST',
+							url: `/submissions/form/${formId}`,
+							body,
 							json: true,
 						};
 						responseData = await this.helpers.httpRequestWithAuthentication.call(this, 'submitraxApi', options);

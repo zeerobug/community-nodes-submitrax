@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Submitrax = void 0;
+const n8n_workflow_1 = require("n8n-workflow");
 class Submitrax {
     constructor() {
         this.description = {
@@ -23,7 +24,7 @@ class Submitrax {
                 },
             ],
             requestDefaults: {
-                baseURL: 'https://s.submitrax.com/api',
+                baseURL: 'https://s.submitrax.com',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
@@ -158,6 +159,12 @@ class Submitrax {
                         },
                     },
                     options: [
+                        {
+                            name: 'Create',
+                            value: 'create',
+                            description: 'Create a new submission for a specific form',
+                            action: 'Create a submission',
+                        },
                         {
                             name: 'Get Many',
                             value: 'getAll',
@@ -340,10 +347,24 @@ class Submitrax {
                     displayOptions: {
                         show: {
                             resource: ['submission'],
-                            operation: ['getAll'],
+                            operation: ['getAll', 'create'],
                         },
                     },
                     default: '',
+                },
+                {
+                    displayName: 'Data (JSON)',
+                    name: 'dataJson',
+                    type: 'json',
+                    required: true,
+                    displayOptions: {
+                        show: {
+                            resource: ['submission'],
+                            operation: ['create'],
+                        },
+                    },
+                    default: '{}',
+                    description: 'The JSON payload for the submission',
                 },
                 // ----------------------------------
                 // Export Fields
@@ -501,6 +522,24 @@ class Submitrax {
                         const options = {
                             method: 'GET',
                             url: `/submissions/form/${formId}`,
+                            json: true,
+                        };
+                        responseData = await this.helpers.httpRequestWithAuthentication.call(this, 'submitraxApi', options);
+                    }
+                    if (operation === 'create') {
+                        const formId = this.getNodeParameter('formId', i);
+                        const dataJson = this.getNodeParameter('dataJson', i);
+                        let body = {};
+                        try {
+                            body = JSON.parse(dataJson);
+                        }
+                        catch (error) {
+                            throw new n8n_workflow_1.NodeOperationError(this.getNode(), 'Invalid JSON provided for submission data');
+                        }
+                        const options = {
+                            method: 'POST',
+                            url: `/submissions/form/${formId}`,
+                            body,
                             json: true,
                         };
                         responseData = await this.helpers.httpRequestWithAuthentication.call(this, 'submitraxApi', options);
