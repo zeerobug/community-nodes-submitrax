@@ -452,7 +452,7 @@ export class Submitrax implements INodeType {
 					if (operation === 'getAll') {
 						const options: IHttpRequestOptions = {
 							method: 'GET',
-							url: '/api/workspaces',
+							url: 'https://s.submitrax.com/api/workspaces',
 							json: true,
 						};
 						responseData = await this.helpers.httpRequestWithAuthentication.call(this, 'submitraxApi', options);
@@ -461,7 +461,7 @@ export class Submitrax implements INodeType {
 						const name = this.getNodeParameter('name', i) as string;
 						const options: IHttpRequestOptions = {
 							method: 'POST',
-							url: '/api/workspaces',
+							url: 'https://s.submitrax.com/api/workspaces',
 							body: { name },
 							json: true,
 						};
@@ -472,7 +472,7 @@ export class Submitrax implements INodeType {
 						const workspaceId = this.getNodeParameter('workspaceId', i) as string;
 						const options: IHttpRequestOptions = {
 							method: 'GET',
-							url: `/api/members/${workspaceId}/members`,
+							url: `https://s.submitrax.com/api/members/${workspaceId}/members`,
 							json: true,
 						};
 						responseData = await this.helpers.httpRequestWithAuthentication.call(this, 'submitraxApi', options);
@@ -484,7 +484,7 @@ export class Submitrax implements INodeType {
 						const yourName = this.getNodeParameter('yourName', i) as string;
 						const options: IHttpRequestOptions = {
 							method: 'POST',
-							url: `/api/members/${workspaceId}/members/invite`,
+							url: `https://s.submitrax.com/api/members/${workspaceId}/members/invite`,
 							body: { theirName, theirEmail, yourName },
 							json: true,
 						};
@@ -494,7 +494,7 @@ export class Submitrax implements INodeType {
 					if (operation === 'getAll') {
 						const options: IHttpRequestOptions = {
 							method: 'GET',
-							url: '/api/forms',
+							url: 'https://s.submitrax.com/api/forms',
 							json: true,
 						};
 						responseData = await this.helpers.httpRequestWithAuthentication.call(this, 'submitraxApi', options);
@@ -503,7 +503,7 @@ export class Submitrax implements INodeType {
 						const formId = this.getNodeParameter('formId', i) as string;
 						const options: IHttpRequestOptions = {
 							method: 'GET',
-							url: `/api/forms/${formId}`,
+							url: `https://s.submitrax.com/api/forms/${formId}`,
 							json: true,
 						};
 						responseData = await this.helpers.httpRequestWithAuthentication.call(this, 'submitraxApi', options);
@@ -520,7 +520,7 @@ export class Submitrax implements INodeType {
 						
 						const options: IHttpRequestOptions = {
 							method: 'POST',
-							url: '/api/forms',
+							url: 'https://s.submitrax.com/api/forms',
 							body,
 							json: true,
 						};
@@ -531,7 +531,7 @@ export class Submitrax implements INodeType {
 						const formId = this.getNodeParameter('formId', i) as string;
 						const options: IHttpRequestOptions = {
 							method: 'GET',
-							url: `/api/submissions/form/${formId}`,
+							url: `https://s.submitrax.com/api/submissions/form/${formId}`,
 							json: true,
 						};
 						responseData = await this.helpers.httpRequestWithAuthentication.call(this, 'submitraxApi', options);
@@ -548,7 +548,7 @@ export class Submitrax implements INodeType {
 
 						const options: IHttpRequestOptions = {
 							method: 'POST',
-							url: `/api/submissions/form/${formId}`,
+							url: `https://s.submitrax.com/api/submissions/form/${formId}`,
 							body,
 							json: true,
 						};
@@ -570,7 +570,7 @@ export class Submitrax implements INodeType {
 						
 						const options: IHttpRequestOptions = {
 							method: 'POST',
-							url: `/api/exports/form/${formId}`,
+							url: `https://s.submitrax.com/api/exports/form/${formId}`,
 							body,
 							json: true,
 						};

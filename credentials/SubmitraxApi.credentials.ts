@@ -1,6 +1,7 @@
 import {
 	ICredentialType,
 	INodeProperties,
+	IAuthenticateGeneric,
 } from 'n8n-workflow';
 
 export class SubmitraxApi implements ICredentialType {
@@ -19,4 +20,13 @@ export class SubmitraxApi implements ICredentialType {
 			required: true,
 		},
 	];
+
+	authenticate: IAuthenticateGeneric = {
+		type: 'generic',
+		properties: {
+			headers: {
+				Authorization: '={{"Bearer " + $credentials.apiToken}}',
+			},
+		},
+	};
 }

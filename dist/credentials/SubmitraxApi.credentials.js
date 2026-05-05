@@ -18,6 +18,14 @@ class SubmitraxApi {
                 required: true,
             },
         ];
+        this.authenticate = {
+            type: 'generic',
+            properties: {
+                headers: {
+                    Authorization: '={{"Bearer " + $credentials.apiToken}}',
+                },
+            },
+        };
     }
 }
 exports.SubmitraxApi = SubmitraxApi;

@@ -1,7 +1,8 @@
-import { ICredentialType, INodeProperties } from 'n8n-workflow';
+import { ICredentialType, INodeProperties, IAuthenticateGeneric } from 'n8n-workflow';
 export declare class SubmitraxApi implements ICredentialType {
     name: string;
     displayName: string;
     documentationUrl: string;
     properties: INodeProperties[];
+    authenticate: IAuthenticateGeneric;
 }

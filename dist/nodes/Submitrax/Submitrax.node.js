@@ -441,7 +441,7 @@ class Submitrax {
                     if (operation === 'getAll') {
                         const options = {
                             method: 'GET',
-                            url: '/api/workspaces',
+                            url: 'https://s.submitrax.com/api/workspaces',
                             json: true,
                         };
                         responseData = await this.helpers.httpRequestWithAuthentication.call(this, 'submitraxApi', options);
@@ -450,7 +450,7 @@ class Submitrax {
                         const name = this.getNodeParameter('name', i);
                         const options = {
                             method: 'POST',
-                            url: '/api/workspaces',
+                            url: 'https://s.submitrax.com/api/workspaces',
                             body: { name },
                             json: true,
                         };
@@ -462,7 +462,7 @@ class Submitrax {
                         const workspaceId = this.getNodeParameter('workspaceId', i);
                         const options = {
                             method: 'GET',
-                            url: `/api/members/${workspaceId}/members`,
+                            url: `https://s.submitrax.com/api/members/${workspaceId}/members`,
                             json: true,
                         };
                         responseData = await this.helpers.httpRequestWithAuthentication.call(this, 'submitraxApi', options);
@@ -474,7 +474,7 @@ class Submitrax {
                         const yourName = this.getNodeParameter('yourName', i);
                         const options = {
                             method: 'POST',
-                            url: `/api/members/${workspaceId}/members/invite`,
+                            url: `https://s.submitrax.com/api/members/${workspaceId}/members/invite`,
                             body: { theirName, theirEmail, yourName },
                             json: true,
                         };
@@ -485,7 +485,7 @@ class Submitrax {
                     if (operation === 'getAll') {
                         const options = {
                             method: 'GET',
-                            url: '/api/forms',
+                            url: 'https://s.submitrax.com/api/forms',
                             json: true,
                         };
                         responseData = await this.helpers.httpRequestWithAuthentication.call(this, 'submitraxApi', options);
@@ -494,7 +494,7 @@ class Submitrax {
                         const formId = this.getNodeParameter('formId', i);
                         const options = {
                             method: 'GET',
-                            url: `/api/forms/${formId}`,
+                            url: `https://s.submitrax.com/api/forms/${formId}`,
                             json: true,
                         };
                         responseData = await this.helpers.httpRequestWithAuthentication.call(this, 'submitraxApi', options);
@@ -509,7 +509,7 @@ class Submitrax {
                         }
                         const options = {
                             method: 'POST',
-                            url: '/api/forms',
+                            url: 'https://s.submitrax.com/api/forms',
                             body,
                             json: true,
                         };
@@ -521,7 +521,7 @@ class Submitrax {
                         const formId = this.getNodeParameter('formId', i);
                         const options = {
                             method: 'GET',
-                            url: `/api/submissions/form/${formId}`,
+                            url: `https://s.submitrax.com/api/submissions/form/${formId}`,
                             json: true,
                         };
                         responseData = await this.helpers.httpRequestWithAuthentication.call(this, 'submitraxApi', options);
@@ -538,7 +538,7 @@ class Submitrax {
                         }
                         const options = {
                             method: 'POST',
-                            url: `/api/submissions/form/${formId}`,
+                            url: `https://s.submitrax.com/api/submissions/form/${formId}`,
                             body,
                             json: true,
                         };
@@ -559,7 +559,7 @@ class Submitrax {
                         }
                         const options = {
                             method: 'POST',
-                            url: `/api/exports/form/${formId}`,
+                            url: `https://s.submitrax.com/api/exports/form/${formId}`,
                             body,
                             json: true,
                         };
