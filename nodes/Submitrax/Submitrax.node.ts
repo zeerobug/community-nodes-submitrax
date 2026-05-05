@@ -548,7 +548,7 @@ export class Submitrax implements INodeType {
 
 						const options: IHttpRequestOptions = {
 							method: 'POST',
-							url: `https://s.submitrax.com/api/submissions/form/${formId}`,
+							url: `https://s.submitrax.com/${formId}`,
 							body,
 							json: true,
 						};
