@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>n8n-nodes-submitrax - npm</title>
+  <meta name="description" content="n8n community node for SubmitraX – manage forms, submissions, workspaces, members, and exports directly from your n8n workflows.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family>Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --npm-red: #cb3837;
+      --npm-dark: #231f20;
+      --bg: #ffffff;
+      --bg-alt: #f7f8f0;
+      --border: #d4d4d4;
+      --text: #333333;
+      --text-muted: #666666;
+      --text-light: #878787;
+      --link: #196292;
+      --code-bg: #f3f3f3;
+      --sidebar-w: 220px;
+    }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.6; }
+
+    /* NAV */
+    .npm-nav { background: var(--npm-dark); padding: 0 24px; display: flex; align-items: center; gap: 20px; height: 56px; position: sticky; top: 0; z-index: 100; }
+    .npm-logo { display: flex; align-items: center; }
+    .npm-logo svg { width: 54px; height: 21px; }
+    .nav-search { flex: 1; max-width: 600px; }
+    .nav-search input { width: 100%; padding: 8px 14px; border: none; border-radius: 4px; font-size: 14px; outline: none; }
+    .nav-links { display: flex; gap: 16px; margin-left: auto; }
+    .nav-links a { color: #ffffffcc; text-decoration: none; font-size: 13px; font-weight: 500; }
+    .nav-links a:hover { color: #fff; }
+
+    /* PACKAGE HEADER */
+    .pkg-header { border-bottom: 1px solid var(--border); padding: 24px; }
+    .pkg-name-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .pkg-name { font-size: 26px; font-weight: 700; color: var(--npm-dark); }
+    .pkg-version-badge { background: var(--npm-red); color: #fff; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 2px; }
+    .pkg-desc { color: var(--text-muted); margin-top: 8px; font-size: 14px; }
+    .pkg-meta-row { display: flex; align-items: center; gap: 16px; margin-top: 12px; flex-wrap: wrap; }
+    .pkg-meta-row span { color: var(--text-light); font-size: 12px; }
+    .pkg-meta-row a { color: var(--link); text-decoration: none; font-size: 12px; }
+    .pkg-meta-row a:hover { text-decoration: underline; }
+
+    /* INSTALL BAR */
+    .install-bar { background: var(--code-bg); border: 1px solid var(--border); border-radius: 4px; display: flex; align-items: center; padding: 10px 16px; gap: 10px; margin: 20px 24px 0; font-family: 'Fira Code', monospace; font-size: 13px; }
+    .install-bar span { color: var(--text-muted); }
+    .install-bar code { flex: 1; color: var(--npm-dark); }
+    .copy-btn { background: none; border: 1px solid var(--border); border-radius: 3px; padding: 3px 10px; font-size: 12px; cursor: pointer; color: var(--text-muted); transition: all 0.15s; }
+    .copy-btn:hover { background: var(--npm-red); color: #fff; border-color: var(--npm-red); }
+
+    /* TABS */
+    .tabs { border-bottom: 1px solid var(--border); padding: 0 24px; margin-top: 16px; display: flex; gap: 0; }
+    .tab { padding: 10px 16px; font-size: 13px; font-weight: 500; cursor: pointer; color: var(--text-muted); border-bottom: 3px solid transparent; transition: all 0.15s; text-decoration: none; }
+    .tab.active { color: var(--npm-dark); border-bottom-color: var(--npm-red); }
+    .tab:hover { color: var(--npm-dark); }
+
+    /* LAYOUT */
+    .pkg-body { display: flex; max-width: 1100px; margin: 0 auto; padding: 24px; gap: 32px; }
+    .pkg-main { flex: 1; min-width: 0; }
+    .pkg-sidebar { width: var(--sidebar-w); flex-shrink: 0; }
+
+    /* README */
+    .readme h1 { font-size: 22px; font-weight: 700; color: var(--npm-dark); margin: 0 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .readme h2 { font-size: 18px; font-weight: 700; color: var(--npm-dark); margin: 28px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+    .readme h3 { font-size: 15px; font-weight: 600; color: var(--npm-dark); margin: 20px 0 8px; }
+    .readme p { margin-bottom: 12px; color: var(--text); line-height: 1.7; }
+    .readme ul, .readme ol { padding-left: 24px; margin-bottom: 12px; }
+    .readme li { margin-bottom: 4px; line-height: 1.7; }
+    .readme a { color: var(--link); text-decoration: none; }
+    .readme a:hover { text-decoration: underline; }
+    .readme code { font-family: 'Fira Code', monospace; font-size: 12px; background: var(--code-bg); padding: 1px 5px; border-radius: 3px; color: var(--npm-dark); }
+    .readme pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 4px; padding: 16px; overflow-x: auto; margin: 12px 0 16px; }
+    .readme pre code { background: none; padding: 0; font-size: 12.5px; line-height: 1.6; }
+    .readme table { border-collapse: collapse; width: 100%; margin-bottom: 16px; font-size: 13px; }
+    .readme table th { background: var(--bg-alt); text-align: left; padding: 8px 12px; border: 1px solid var(--border); font-weight: 600; }
+    .readme table td { padding: 8px 12px; border: 1px solid var(--border); }
+    .readme table tr:hover td { background: var(--bg-alt); }
+    .node-badge { display: inline-block; background: #f0f9ff; border: 1px solid #bae6fd; color: #0369a1; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 12px; margin: 2px; }
+    .op-badge { display: inline-block; background: #f0fdf4; border: 1px solid #86efac; color: #166534; font-size: 11px; padding: 1px 7px; border-radius: 10px; margin: 1px; }
+    .alert-box { border-left: 4px solid #3b82f6; background: #eff6ff; padding: 12px 16px; border-radius: 0 4px 4px 0; margin: 16px 0; }
+    .alert-box.warn { border-color: #f59e0b; background: #fffbeb; }
+    .alert-box.tip { border-color: #10b981; background: #ecfdf5; }
+    .alert-box strong { display: block; margin-bottom: 4px; font-size: 13px; }
+
+    /* SIDEBAR */
+    .sidebar-section { margin-bottom: 24px; }
+    .sidebar-section h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-light); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+    .sidebar-stat { display: flex; flex-direction: column; margin-bottom: 10px; }
+    .sidebar-stat .label { font-size: 11px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.06em; }
+    .sidebar-stat .value { font-size: 14px; font-weight: 600; color: var(--npm-dark); margin-top: 1px; }
+    .sidebar-stat .value a { color: var(--link); text-decoration: none; font-weight: 500; font-size: 13px; }
+    .sidebar-stat .value a:hover { text-decoration: underline; }
+    .sidebar-tag { display: inline-block; background: var(--bg-alt); border: 1px solid var(--border); color: var(--text); font-size: 11px; padding: 3px 8px; border-radius: 2px; margin: 2px 2px 2px 0; text-decoration: none; }
+    .sidebar-tag:hover { background: var(--npm-dark); color: #fff; }
+    .collab-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--npm-red); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; margin-right: 4px; }
+    .dl-chart { margin-bottom: 8px; }
+    .dl-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
+    .dl-bar-row .week-label { font-size: 10px; color: var(--text-light); width: 22px; }
+    .dl-bar-bg { flex: 1; height: 8px; background: var(--code-bg); border-radius: 2px; overflow: hidden; }
+    .dl-bar { height: 100%; background: var(--npm-red); border-radius: 2px; transition: width 0.4s; }
+    .dl-total { font-size: 22px; font-weight: 700; color: var(--npm-dark); }
+    .dl-label { font-size: 11px; color: var(--text-light); }
+
+    /* FOOTER */
+    .npm-footer { background: var(--npm-dark); color: #ffffff80; padding: 32px 24px; text-align: center; font-size: 12px; margin-top: 48px; }
+    .npm-footer a { color: #ffffffaa; text-decoration: none; margin: 0 8px; }
+
+    @media (max-width: 768px) {
+      .pkg-body { flex-direction: column; padding: 16px; }
+      .pkg-sidebar { width: 100%; }
+      .pkg-name { font-size: 20px; }
+      .npm-nav { padding: 0 12px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="npm-nav">
+  <div class="npm-logo">
+    <svg viewBox="0 0 54 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#fff" d="M0 0h54v21H0z"/>
+      <path fill="#cb3837" d="M3 3h21v15H12V9H9v9H3V3z"/>
+      <path fill="#cb3837" d="M27 3h24v15h-6V9h-6v9h-6V9h-3v9h-3V3z"/>
+      <path fill="#fff" d="M6 6h6v6H9V9H6V6zM42 6h3v9h-3V6z"/>
+    </svg>
+  </div>
+  <div class="nav-search">
+    <input type="text" placeholder="Search packages" value="n8n-nodes-submitrax">
+  </div>
+  <div class="nav-links">
+    <a href="#">Sign In</a>
+    <a href="#">Sign Up</a>
+  </div>
+</nav>
+
+<!-- PACKAGE HEADER -->
+<div style="max-width:1100px;margin:0 auto;padding:0 24px;">
+  <div class="pkg-header" style="padding:24px 0 0;">
+    <div class="pkg-name-row">
+      <span class="pkg-name">n8n-nodes-submitrax</span>
+      <span class="pkg-version-badge">0.1.5</span>
+    </div>
+    <p class="pkg-desc">n8n community node for SubmitraX – manage forms, submissions, workspaces, members, and exports directly from your n8n workflows.</p>
+    <div class="pkg-meta-row">
+      <span>Public</span>
+      <span>•</span>
+      <span>Published <strong>2 weeks ago</strong></span>
+      <span>•</span>
+      <a href="https://submitrax.com" target="_blank">submitrax.com</a>
+    </div>
+  </div>
+
+  <div class="install-bar">
+    <span>$</span>
+    <code id="install-cmd">npm i n8n-nodes-submitrax</code>
+    <button class="copy-btn" onclick="copyInstall()">Copy</button>
+  </div>
+
+  <div class="tabs">
+    <a class="tab active" href="#">Readme</a>
+    <a class="tab" href="#">Code</a>
+    <a class="tab" href="#">1 Dependency</a>
+    <a class="tab" href="#">0 Dependents</a>
+    <a class="tab" href="#">2 Versions</a>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="pkg-body">
+
+  <!-- README -->
+  <main class="pkg-main readme">
+    <h1>n8n-nodes-submitrax</h1>
+
+    <p>This is an n8n community node that lets you use <a href="https://submitrax.com" target="_blank">SubmitraX</a> in your n8n workflows.</p>
+    <p><strong>SubmitraX</strong> is a powerful form backend for modern developers. Connect your forms to the API and handle submissions, emails, integrations, and spam protection — no server-side code required.</p>
+
+    <div class="alert-box tip">
+      <strong>✅ n8n Community Node</strong>
+      This node is verified and compatible with n8n's community node system. Install it directly from within n8n or via npm.
+    </div>
+
+    <h2>📦 Installation</h2>
+    <h3>In n8n (recommended)</h3>
+    <ol>
+      <li>Open your n8n instance</li>
+      <li>Go to <strong>Settings → Community Nodes</strong></li>
+      <li>Click <strong>Install a community node</strong></li>
+      <li>Enter <code>n8n-nodes-submitrax</code></li>
+      <li>Click <strong>Install</strong></li>
+    </ol>
+
+    <h3>Via npm (self-hosted)</h3>
+    <pre><code>npm install n8n-nodes-submitrax</code></pre>
+
+    <h2>🔑 Credentials</h2>
+    <p>Before using the node, you need a SubmitraX API token.</p>
+    <ol>
+      <li>Log in to <a href="https://submitrax.com" target="_blank">submitrax.com</a></li>
+      <li>Go to <strong>Workspace → Settings</strong></li>
+      <li>Generate an <strong>API Token</strong></li>
+      <li>In n8n, create a new <strong>SubmitraX API</strong> credential and paste the token</li>
+    </ol>
+
+    <pre><code>Authorization: Bearer YOUR_API_TOKEN</code></pre>
+
+    <h2>🚀 Resources &amp; Operations</h2>
+    <p>The node supports the following resources and operations:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Resource</th>
+          <th>Operations</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="node-badge">Workspace</span></td>
+          <td>
+            <span class="op-badge">Get Many</span>
+            <span class="op-badge">Create</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="node-badge">Form</span></td>
+          <td>
+            <span class="op-badge">Get Many</span>
+            <span class="op-badge">Get</span>
+            <span class="op-badge">Create</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="node-badge">Submission</span></td>
+          <td>
+            <span class="op-badge">Get Many</span>
+            <span class="op-badge">Create</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="node-badge">Member</span></td>
+          <td>
+            <span class="op-badge">Get Many</span>
+            <span class="op-badge">Invite</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="node-badge">Export</span></td>
+          <td>
+            <span class="op-badge">Create</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>💡 Usage Examples</h2>
+
+    <h3>Get all form submissions</h3>
+    <pre><code>Resource:  Submission
+Operation: Get Many
+Form ID:   your-form-id</code></pre>
+
+    <h3>Create a new submission</h3>
+    <pre><code>Resource:  Submission
+Operation: Create
+Form ID:   your-form-id
+Data (JSON):
+{
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "message": "Hello from n8n!"
+}</code></pre>
+
+    <h3>Export submissions as CSV</h3>
+    <pre><code>Resource:  Export
+Operation: Create
+Form ID:   your-form-id
+Format:    CSV
+Start Date: 2024-01-01
+End Date:   2024-12-31</code></pre>
+
+    <h3>Invite a team member</h3>
+    <pre><code>Resource:    Member
+Operation:   Invite
+Workspace ID: 1
+Their Name:   Alice Smith
+Their Email:  alice@example.com
+Your Name:    Bob Jones</code></pre>
+
+    <h2>🔗 API Reference</h2>
+    <p>All requests go to the base URL:</p>
+    <pre><code>https://s.submitrax.com/api</code></pre>
+
+    <table>
+      <thead>
+        <tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>GET</code></td><td><code>/workspaces</code></td><td>List all workspaces</td></tr>
+        <tr><td><code>POST</code></td><td><code>/workspaces</code></td><td>Create workspace</td></tr>
+        <tr><td><code>GET</code></td><td><code>/forms</code></td><td>List all forms</td></tr>
+        <tr><td><code>GET</code></td><td><code>/forms/:id</code></td><td>Get specific form</td></tr>
+        <tr><td><code>POST</code></td><td><code>/forms</code></td><td>Create form</td></tr>
+        <tr><td><code>GET</code></td><td><code>/submissions/form/:formId</code></td><td>List submissions</td></tr>
+        <tr><td><code>POST</code></td><td><code>/:formId</code></td><td>Create submission</td></tr>
+        <tr><td><code>GET</code></td><td><code>/members/:workspaceId/members</code></td><td>List members</td></tr>
+        <tr><td><code>POST</code></td><td><code>/members/:workspaceId/members/invite</code></td><td>Invite member</td></tr>
+        <tr><td><code>POST</code></td><td><code>/exports/form/:formId</code></td><td>Create export</td></tr>
+      </tbody>
+    </table>
+
+    <h2>🛡️ Compatibility</h2>
+    <div class="alert-box">
+      <strong>ℹ️ Requirements</strong>
+      This node requires n8n version <code>>=0.187.0</code>. It uses the n8n community node API v1.
+    </div>
+    <ul>
+      <li>n8n community node package (<code>n8nNodesApiVersion: 1</code>)</li>
+      <li>Peer dependency: <code>n8n-workflow</code></li>
+      <li>TypeScript source included</li>
+    </ul>
+
+    <h2>📄 License</h2>
+    <p>MIT — Copyright © 2024 <a href="https://submitrax.com" target="_blank">Submitrax</a></p>
+    <p>See the <a href="#">LICENSE</a> file for details.</p>
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="pkg-sidebar">
+
+    <div class="sidebar-section">
+      <h4>Weekly Downloads</h4>
+      <div class="dl-total" id="dl-count">—</div>
+      <div class="dl-label">downloads in the last week</div>
+      <div class="dl-chart" style="margin-top:12px;" id="dl-chart"></div>
+    </div>
+
+    <div class="sidebar-section">
+      <h4>Version</h4>
+      <div class="sidebar-stat">
+        <span class="value">0.1.5</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h4>License</h4>
+      <div class="sidebar-stat">
+        <span class="value"><a href="#">MIT</a></span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h4>Unpacked Size</h4>
+      <div class="sidebar-stat">
+        <span class="value">48.2 kB</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h4>Total Files</h4>
+      <div class="sidebar-stat">
+        <span class="value">12</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h4>Last Publish</h4>
+      <div class="sidebar-stat">
+        <span class="value">2 weeks ago</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h4>Collaborators</h4>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+        <div class="collab-avatar">S</div>
+        <a href="https://submitrax.com" style="color:var(--link);font-size:13px;text-decoration:none;">submitrax</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h4>Repository</h4>
+      <div class="sidebar-stat">
+        <span class="value">
+          <a href="https://github.com/zeerobug/community-nodes-submitrax" target="_blank">GitHub ↗</a>
+        </span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h4>Homepage</h4>
+      <div class="sidebar-stat">
+        <span class="value">
+          <a href="https://submitrax.com" target="_blank">submitrax.com ↗</a>
+        </span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h4>Keywords</h4>
+      <a class="sidebar-tag" href="#">n8ncommunity-node-package</a>
+      <a class="sidebar-tag" href="#">n8n</a>
+      <a class="sidebar-tag" href="#">submitrax</a>
+      <a class="sidebar-tag" href="#">forms</a>
+      <a class="sidebar-tag" href="#">automation</a>
+    </div>
+
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer class="npm-footer">
+  <div style="margin-bottom:12px;">
+    <svg width="40" height="16" viewBox="0 0 54 21" fill="none" style="vertical-align:middle;opacity:0.5">
+      <path fill="#fff" d="M0 0h54v21H0z"/>
+      <path fill="#cb3837" d="M3 3h21v15H12V9H9v9H3V3z"/>
+      <path fill="#cb3837" d="M27 3h24v15h-6V9h-6v9h-6V9h-3v9h-3V3z"/>
+      <path fill="#fff" d="M6 6h6v6H9V9H6V6zM42 6h3v9h-3V6z"/>
+    </svg>
+  </div>
+  <a href="#">Support</a>
+  <a href="#">About</a>
+  <a href="#">Blog</a>
+  <a href="#">Policies</a>
+  <a href="#">Terms of Use</a>
+  <a href="#">Privacy</a>
+  <div style="margin-top:16px;">© npm, Inc. — This page is a demo for <strong style="color:#fff;">n8n-nodes-submitrax</strong></div>
+</footer>
+
+<script>
+  // Copy install command
+  function copyInstall() {
+    navigator.clipboard.writeText('npm i n8n-nodes-submitrax');
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = 'Copied!';
+    btn.style.background = '#16a34a';
+    btn.style.color = '#fff';
+    btn.style.borderColor = '#16a34a';
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.style.background = '';
+      btn.style.color = '';
+      btn.style.borderColor = '';
+    }, 2000);
+  }
+
+  // Animated download chart
+  const weeks = ['W1','W2','W3','W4','W5','W6','W7','W8'];
+  const vals  = [24, 38, 51, 47, 63, 88, 72, 104];
+  const max = Math.max(...vals);
+  const chart = document.getElementById('dl-chart');
+  weeks.forEach((w, i) => {
+    const pct = Math.round((vals[i] / max) * 100);
+    chart.innerHTML += `
+      <div class="dl-bar-row">
+        <span class="week-label">${w}</span>
+        <div class="dl-bar-bg"><div class="dl-bar" style="width:0%" data-w="${pct}%"></div></div>
+        <span style="font-size:10px;color:var(--text-light);width:28px;text-align:right;">${vals[i]}</span>
+      </div>`;
+  });
+  document.getElementById('dl-count').textContent = vals.reduce((a,b)=>a+b,0).toLocaleString();
+  setTimeout(() => {
+    document.querySelectorAll('.dl-bar').forEach(b => {
+      b.style.width = b.dataset.w;
+    });
+  }, 100);
+</script>
+</body>
+</html>
