@@ -7,7 +7,7 @@ import {
 export class SubmitraxApi implements ICredentialType {
 	name = 'submitraxApi';
 	displayName = 'SubmitraX API';
-	documentationUrl = 'https://s.submitrax.com';
+	documentationUrl = 'https://submitrax.com/documentation#n8n-credentials';
 	properties: INodeProperties[] = [
 		{
 			displayName: 'API Token',

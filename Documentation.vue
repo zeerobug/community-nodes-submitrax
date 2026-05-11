@@ -830,6 +830,140 @@ formData.forEach((value, key) => {
               </div>
             </div>
           </section>
+
+          <!-- n8n Integration: Setup -->
+          <section v-if="activeSection === 'n8n-setup'" class="doc-section">
+            <h1>n8n Integration</h1>
+            <p class="lead">Automate your form workflows by connecting SubmitraX to n8n — a powerful open-source workflow automation platform.</p>
+
+            <div class="info-card">
+              <div class="card-icon"><Package :size="20" /></div>
+              <div class="card-body">
+                <h4>Community Node</h4>
+                <p>SubmitraX is available as an official n8n community node published on npm as <code>community-nodes-submitrax</code>.</p>
+              </div>
+            </div>
+
+            <h3>1. Prerequisites</h3>
+            <p>Before you begin, make sure you have:</p>
+            <ul>
+              <li>A running <strong>self-hosted</strong> n8n instance (community nodes are not supported on n8n Cloud's free tier).</li>
+              <li>An active <router-link to="/register">SubmitraX account</router-link>.</li>
+            </ul>
+
+            <h3>2. Install the Community Node</h3>
+            <p>In your n8n instance, go to <strong>Settings → Community Nodes</strong> and install the package:</p>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="lang">Package name</span>
+              </div>
+              <pre><code>community-nodes-submitrax</code></pre>
+            </div>
+            <p>Alternatively, you can install it directly via npm in your n8n directory:</p>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="lang">Terminal</span>
+              </div>
+              <pre><code>npm install community-nodes-submitrax</code></pre>
+            </div>
+
+            <div class="warning-card">
+              <div class="card-icon"><AlertTriangle :size="20" /></div>
+              <div class="card-body">
+                <p>Restart your n8n instance after installing the node for it to appear in the node panel.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- n8n Integration: Account & Token -->
+          <section v-if="activeSection === 'n8n-credentials'" class="doc-section">
+            <h1>Account Setup &amp; API Token</h1>
+            <p>The SubmitraX n8n node authenticates using an API token generated from your SubmitraX workspace settings. Follow the steps below to create an account, generate a token, and configure the credential in n8n.</p>
+
+            <h3>Step 1 — Create a SubmitraX Account</h3>
+            <ol>
+              <li>Go to <router-link to="/register">submitrax.com/register</router-link> and sign up for a free account.</li>
+              <li>Confirm your email address via the verification link sent to your inbox.</li>
+              <li>Log in and you will land on the <strong>Dashboard</strong>.</li>
+            </ol>
+
+            <h3>Step 2 — Generate an API Token</h3>
+            <p>API tokens are scoped to a <strong>Workspace</strong>. You need at least one workspace before generating a token.</p>
+            <ol>
+              <li>From the Dashboard sidebar, open your <strong>Workspace</strong>.</li>
+              <li>Click <strong>Settings</strong> (gear icon) for that workspace.</li>
+              <li>Scroll to the <strong>API Token</strong> section and click <strong>Generate Token</strong>.</li>
+              <li>Copy the token immediately — it will not be shown again.</li>
+            </ol>
+
+            <div class="warning-card">
+              <div class="card-icon"><AlertTriangle :size="20" /></div>
+              <div class="card-body">
+                <p><strong>Keep your token secret.</strong> Anyone with the token can make API calls on behalf of your workspace. Generating a new token invalidates the previous one.</p>
+              </div>
+            </div>
+
+            <p>You can also generate a token via the API itself:</p>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="lang">cURL</span>
+              </div>
+              <pre><code>curl -X POST https://s.submitrax.com/api/workspaces/:id/token \
+  -H "Authorization: Bearer YOUR_EXISTING_TOKEN"</code></pre>
+            </div>
+            <p>The response will contain your new token:</p>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="lang">JSON</span>
+              </div>
+              <pre><code>{
+  "api_token": "sk_a1b2c3d4e5f6..."
+}</code></pre>
+            </div>
+
+            <h3>Step 3 — Configure the Credential in n8n</h3>
+            <p>Once the community node is installed, set up your SubmitraX credential:</p>
+            <ol>
+              <li>In n8n, open <strong>Credentials</strong> from the left sidebar.</li>
+              <li>Click <strong>Add Credential</strong> and search for <strong>SubmitraX API</strong>.</li>
+              <li>Paste your API token into the <strong>API Token</strong> field.</li>
+              <li>Click <strong>Save</strong>. n8n will verify the credential by making a test request.</li>
+            </ol>
+
+            <div class="info-card">
+              <div class="card-icon"><Key :size="20" /></div>
+              <div class="card-body">
+                <h4>How Authentication Works</h4>
+                <p>The node attaches your token to every request as a <code>Bearer</code> header:</p>
+                <div class="code-block" style="margin-top:0.75rem">
+                  <pre><code>Authorization: Bearer YOUR_API_TOKEN</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <h3>Step 4 — Add a SubmitraX Node to Your Workflow</h3>
+            <ol>
+              <li>Create or open a workflow in n8n.</li>
+              <li>Click the <strong>+</strong> button to add a node and search for <strong>SubmitraX</strong>.</li>
+              <li>Select the <strong>Resource</strong> (Workspace, Form, Submission, Export, Member) and the desired <strong>Operation</strong>.</li>
+              <li>Choose your saved <strong>SubmitraX API</strong> credential from the dropdown.</li>
+              <li>Fill in the required fields and run your workflow.</li>
+            </ol>
+
+            <div class="info-card">
+              <div class="card-icon"><Package :size="20" /></div>
+              <div class="card-body">
+                <h4>Available Resources &amp; Operations</h4>
+                <ul style="margin: 0; padding-left: 1.25rem;">
+                  <li><strong>Workspace</strong> — Get Many, Create</li>
+                  <li><strong>Form</strong> — Get Many, Get, Create</li>
+                  <li><strong>Submission</strong> — Get Many, Create</li>
+                  <li><strong>Export</strong> — Create (CSV or JSON)</li>
+                  <li><strong>Member</strong> — Get Many, Invite</li>
+                </ul>
+              </div>
+            </div>
+          </section>
         </div>
 
         <footer class="content-footer">
@@ -865,7 +999,7 @@ formData.forEach((value, key) => {
 </template>
 
 <script>
-import { X, Menu, Lightbulb, Mail, Shield, Plug, BarChart2, AlertTriangle, Filter, ArrowLeft, ArrowRight, Wand2 } from 'lucide-vue-next'
+import { X, Menu, Lightbulb, Mail, Shield, Plug, BarChart2, AlertTriangle, Filter, ArrowLeft, ArrowRight, Wand2, Package, Key } from 'lucide-vue-next'
 
 export default {
   name: 'Documentation',
@@ -881,7 +1015,9 @@ export default {
     Filter,
     ArrowLeft,
     ArrowRight,
-    Wand2
+    Wand2,
+    Package,
+    Key
   },
   data() {
     return {
@@ -933,6 +1069,13 @@ export default {
             { id: 'api-forms', label: 'Forms' },
             { id: 'api-submissions', label: 'Submissions' },
             { id: 'api-exports', label: 'Exports' },
+          ]
+        },
+        {
+          title: 'n8n Integration',
+          items: [
+            { id: 'n8n-setup', label: 'Install the Node' },
+            { id: 'n8n-credentials', label: 'Account & API Token' },
           ]
         }
       ]

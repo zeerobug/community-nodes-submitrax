@@ -5,7 +5,7 @@ class SubmitraxApi {
     constructor() {
         this.name = 'submitraxApi';
         this.displayName = 'SubmitraX API';
-        this.documentationUrl = 'https://s.submitrax.com';
+        this.documentationUrl = 'https://submitrax.com/documentation#n8n-credentials';
         this.properties = [
             {
                 displayName: 'API Token',
