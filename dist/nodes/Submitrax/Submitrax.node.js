@@ -340,7 +340,7 @@ class Submitrax {
                 // Submission Fields
                 // ----------------------------------
                 {
-                    displayName: 'Form KEY',
+                    displayName: 'Form ID or Key',
                     name: 'formId',
                     type: 'string',
                     required: true,
@@ -351,6 +351,7 @@ class Submitrax {
                         },
                     },
                     default: '',
+                    description: 'The ID or Key of the form',
                 },
                 {
                     displayName: 'Data (JSON)',

@@ -199,7 +199,7 @@ export class Submitrax implements INodeType {
 				],
 				default: 'create',
 			},
-
+			
 			// ----------------------------------
 			// Workspace Fields
 			// ----------------------------------
@@ -348,7 +348,7 @@ export class Submitrax implements INodeType {
 			// Submission Fields
 			// ----------------------------------
 			{
-				displayName: 'Form KEY',
+				displayName: 'Form ID or Key',
 				name: 'formId',
 				type: 'string',
 				required: true,
@@ -359,6 +359,7 @@ export class Submitrax implements INodeType {
 					},
 				},
 				default: '',
+				description: 'The ID or Key of the form',
 			},
 			{
 				displayName: 'Data (JSON)',
@@ -447,7 +448,7 @@ export class Submitrax implements INodeType {
 		for (let i = 0; i < items.length; i++) {
 			try {
 				let responseData;
-
+				
 				if (resource === 'workspace') {
 					if (operation === 'getAll') {
 						const options: IHttpRequestOptions = {
@@ -512,12 +513,12 @@ export class Submitrax implements INodeType {
 						const name = this.getNodeParameter('name', i) as string;
 						const workspaceId = this.getNodeParameter('workspaceId', i) as string;
 						const additionalFields = this.getNodeParameter('additionalFields', i) as any;
-
+						
 						const body: any = { name, workspace_id: workspaceId };
 						if (additionalFields.email_to) {
 							body.email_to = additionalFields.email_to;
 						}
-
+						
 						const options: IHttpRequestOptions = {
 							method: 'POST',
 							url: 'https://s.submitrax.com/api/forms',
@@ -559,7 +560,7 @@ export class Submitrax implements INodeType {
 						const formId = this.getNodeParameter('formId', i) as string;
 						const format = this.getNodeParameter('format', i) as string;
 						const additionalFields = this.getNodeParameter('additionalFields', i) as any;
-
+						
 						const body: any = { format };
 						if (additionalFields.start_date) {
 							body.start_date = additionalFields.start_date.split('T')[0]; // Format to YYYY-MM-DD based on typical datetime component
@@ -567,7 +568,7 @@ export class Submitrax implements INodeType {
 						if (additionalFields.end_date) {
 							body.end_date = additionalFields.end_date.split('T')[0];
 						}
-
+						
 						const options: IHttpRequestOptions = {
 							method: 'POST',
 							url: `https://s.submitrax.com/api/exports/form/${formId}`,
@@ -577,7 +578,7 @@ export class Submitrax implements INodeType {
 						responseData = await this.helpers.httpRequestWithAuthentication.call(this, 'submitraxApi', options);
 					}
 				}
-
+				
 				if (Array.isArray(responseData)) {
 					returnData.push(...this.helpers.returnJsonArray(responseData));
 				} else if (responseData !== undefined) {
