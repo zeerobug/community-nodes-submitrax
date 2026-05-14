@@ -11,7 +11,7 @@ export class Submitrax implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'SubmitraX',
 		name: 'submitrax',
-		icon: 'file:submitrax.svg',
+		icon: 'file:submitrax.png',
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',

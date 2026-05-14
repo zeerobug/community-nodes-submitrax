@@ -50,6 +50,7 @@ The node supports the following resources and operations:
 | **Submission** | Get Many, Create |
 | **Member** | Get Many, Invite |
 | **Export** | Create |
+| **Trigger** | Webhook (Each submission) |
 
 ---
 
@@ -88,6 +89,12 @@ The node supports the following resources and operations:
 - **Their Name**: Alice Smith
 - **Their Email**: `alice@example.com`
 - **Your Name**: Bob Jones
+
+### Receive new submissions in real-time
+1. Add a **SubmitraX Trigger** node to your workflow
+2. Connect your SubmitraX API credential
+3. Enter the **Form ID** you want to monitor
+4. Activate your workflow! n8n will automatically register the webhook with SubmitraX.
 
 ---
 

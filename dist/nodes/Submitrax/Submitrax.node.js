@@ -7,7 +7,7 @@ class Submitrax {
         this.description = {
             displayName: 'SubmitraX',
             name: 'submitrax',
-            icon: 'file:submitrax.svg',
+            icon: 'file:submitrax.png',
             group: ['transform'],
             version: 1,
             subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
