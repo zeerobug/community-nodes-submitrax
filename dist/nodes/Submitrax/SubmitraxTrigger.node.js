@@ -6,7 +6,7 @@ class SubmitraxTrigger {
         this.description = {
             displayName: 'SubmitraX Trigger',
             name: 'submitraxTrigger',
-            icon: 'file:submitrax.png',
+            icon: 'file:submitrax.svg',
             group: ['trigger'],
             version: 1,
             description: 'Handle SubmitraX webhooks',
