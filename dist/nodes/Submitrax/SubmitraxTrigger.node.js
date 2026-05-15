@@ -52,8 +52,8 @@ class SubmitraxTrigger {
                     };
                     try {
                         const responseData = await this.helpers.httpRequestWithAuthentication.call(this, 'submitraxApi', options);
-                        if (responseData.webhooks) {
-                            for (const webhook of responseData.webhooks) {
+                        if (responseData.settings && responseData.settings.webhooks) {
+                            for (const webhook of responseData.settings.webhooks) {
                                 if (webhook.url === webhookUrl) {
                                     return true;
                                 }
