@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-submitrax",
-  "version": "0.1.92",
+  "version": "0.1.93",
   "description": "n8n node for Submitrax",
   "keywords": [
     "n8ncommunity-node-package"

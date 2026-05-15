@@ -65,8 +65,8 @@ export class SubmitraxTrigger implements INodeType {
 						options,
 					);
 
-					if (responseData.webhooks) {
-						for (const webhook of responseData.webhooks) {
+					if (responseData.settings && responseData.settings.webhooks) {
+						for (const webhook of responseData.settings.webhooks) {
 							if (webhook.url === webhookUrl) {
 								return true;
 							}
